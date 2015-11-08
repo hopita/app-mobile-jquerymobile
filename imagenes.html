@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>App Administración Imágenes | Imágenes</title>
+    <!-- Los 3 ficheros que jquerymobile necesita para trabajar -->
+    
+    <script src="js/jquery-2.1.4.js" type="text/javascript"></script>
+    <script src="jquerymobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+    
+    <link rel="stylesheet" href="jquerymobile/jquery.mobile-1.4.5.css" />
+    <link rel="stylesheet" href="css/misestilos.css" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<section id="inicio" data-role="page">
+  		<div data-role="header">
+		    <h1>App administración imágenes - Inicio</h1>
+			    <div data-role="navbar">
+				    <ul>
+				      <li><a href="index.html"  class="ui-btnactive" data-icon="home">Inicio</a></li>
+				      <li><a href="imagenes.html" data-icon="bullets">Imágenes</a></li>
+				      <li><a href="camara.html" data-icon="camera">Cámara</a></li>
+				      <li><a href="localizacion.html" data-icon="location">Localizacion</a></li>
+				    </ul>
+				 </div>
+	     </div>
+	     <div class="ui-content">
+		     <div id="botonaltas">
+				<!--Este botón lanza la ventana modal del formulario de altas-->
+				<button type='button' id="alta" data-toggle="modal" data-target="#altaModal">+</button>
+			</div>
+	     	 <!--En este elemento muestro el listado de imágenes generado dinámicamente-->
+			 <div id ="cajadatos">			       
+			 </div>
+	     </div>
+  	</section>
+    
+	<main>
+		<div class="container-fluid">
+			<!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "alta" -->
+			<div class="modal fade" id="altaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				     <div class="modal-dialog">
+				        <div class="modal-content">
+					        <div class="modal-body">
+								<form name="formulario" enctype="multipart/form-data">
+									<label for="titulo">Título: </label><br>
+									<input type="text" name="titulo" id="titulo"><br>
+									<label for="descripcion">Descripción: </label><br>
+									<textarea type="text" name="descripcion" id="descripcion"></textarea><br>
+									<label for="archivoimagen">Imagen*: </label><br>
+									<input type="file" name="archivoimagen" id="archivoimagen"><br>
+									<!-- Elemento donde voy a mostrar un mensaje de aviso si se selecciona un archivo que no sea una imagen-->
+									<div id="alerta"></div>
+									<!--Este botón está inactivo hasta que se seleccione una imagen, que es el único dato obligatorio para dar el alta-->
+									<input type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Selecciona una imagen" id="grabar" value="Añadir" disabled="disabled">
+								</form>
+							</div>
+						    <div class="modal-footer">
+								<div class="col-md-2 pull-right">
+					               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+					            </div>
+					        </div> 
+					    </div>
+				    </div>	
+				</div>
+				<!--fin altaModal-->
+				<!--Ventana modal con el formulario de modificaciones, esta ventana se abre cuando se hace click en el botón de modificación de la imagen en el listado de imágenes.-->
+				<div class="modal fade" id="modificacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				    <div class="modal-dialog">
+				        <div class="modal-content">
+					        <div class="modal-body">
+								<form name="formularioeditar" >
+									<input type="hidden" name="idrecord" id="idrecord" value="">
+									<div id="cajaimagen"></div>
+									<label for="tituloeditar">Título: </label><br>
+									<input type="text" name="tituloeditar" id="tituloeditar"><br>
+									<label for="descripcioneditar">Descripción: </label><br>
+									<textarea type="text" name="descripcioneditar" id="descripcioneditar"></textarea><br>
+									<input type="button" class="btn btn-primary" id="grabareditar" value="Modificar">
+								</form>
+						</div>
+					       <div class="modal-footer">
+								<div class="col-md-2 pull-right">
+				                	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+				                </div>
+				            </div> 
+					    </div>
+				    </div>	
+				</div>
+				<!--fin modificacionModal-->
+				
+			<div id="botonaltas">
+				<!--Este botón lanza la ventana modal del formulario de altas-->
+				<button type='button' id="alta" data-toggle="modal" data-target="#altaModal">+</button>
+			</div>
+			<!--En este elemento se van a mostrar el listado de imágenes y el botón 'Eliminar todos' generados dinámicamente-->		
+			<section id="cajadatos">
+				No hay información disponible
+				
+			</section>
+		</div>	
+			
+			
+	</main>
+	<!--contenedor de los selectores de efectos-->
+	<footer class="panel-footer navbar-inverse navbar-fixed-bottom">
+      <div class="container-fluid">
+      	<div id="efectos" class="row">
+      		<span class="glyphicon glyphicon-cog"></span>
+			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="">Ninguno</label>
+			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="sepia">Sepia</label>
+			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="blanconegro">Blanco/negro</label>
+			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="img-circle">Redondeado</label>
+		</div>
+      </div>
+    </footer>
+
+    <script src="js/imagenes.js"></script>
+  </body>
+</html>
