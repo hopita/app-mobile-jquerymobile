@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>App Administración Imágenes | Inicio</title>
+    <!-- Los 3 ficheros que jquerymobile necesita para trabajar -->
+    <link rel="stylesheet" href="jquerymobile/jquery.mobile-1.4.5.css" />
+    <script src="js/jquery-2.1.4.js" type="text/javascript"></script>
+    <script src="jquerymobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body id="home">
+    <header class="clearfix navbar navbar-fixed-top navbar-inverse">
+	    <div class="container-fluid">
+		    <ul class="nav navbar nav-justified">
+		    	<!--Los iconos se muestran solo en dispositivos pequeños, entonces se esconde el texto-->
+			    <li class="active"><a href="#"><span class="glyphicon glyphicon-home visible-xs" aria-hidden="true"></span><span class=" hidden-xs">home</span></a></li>
+			    <li><a href="imagenes.html"><span class="glyphicon glyphicon-picture visible-xs" aria-hidden="true"></span><span class=" hidden-xs">imágenes</span></a></li>
+			    <li><a href="camara.html"><span class="glyphicon glyphicon-camera visible-xs" aria-hidden="true"></span><span class=" hidden-xs">cámara</span></a></li>
+			    <li><a href="localizacion.html"><span class="glyphicon glyphicon-globe visible-xs" aria-hidden="true"></span><span class=" hidden-xs">localización</span></a></li>
+		    </ul>
+	    </div>
+    </header>
+	<main>
+		<section class="container-fluid">
+			 <div class="row content">
+			 	<!--En este elemento muestro el listado de imágenes generado dinámicamente-->
+			    <div id ="cajadatos" class="col-lg-12">			       
+			    </div>
+			</div>
+			<!--Ventana modal que carga una imagen, con botones para navegar entre las imágenes similar a un carrusel. 
+				Se abre al clickar una imagen. La imagen se carga dinámicamente, al hacer click en una imagen del listado.-->
+			<div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <div class="modal-body">
+			                <img id="image-gallery-image" class="img-responsive" src="">
+			                <button type="button" class="btn btn-default left carousel-control" id="imagen-anterior"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
+			                <button type="button" id="imagen-siguiente" class="btn btn-default right carousel-control"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+			            </div>
+			            <div class="modal-footer">
+							<h4 class="modal-title text-center" id="image-gallery-title"></h4>
+							<div class="text-justify" id="image-gallery-caption">
+			                    
+			                </div>
+			                <div class="col-md-2 pull-right">
+			                	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<!-- fin image-gallery-->
+		</section>
+	</main>
+	<!--contenedor de los selectores de efectos-->
+	<footer class="panel-footer navbar-inverse navbar-fixed-bottom">
+      <div class="container-fluid">
+      	<div id="efectos" class="row">
+      		<span class="glyphicon glyphicon-cog"></span>
+			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="">Ninguno</label>
+			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="sepia">Sepia</label>
+			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="blanconegro">Blanco/negro</label>
+			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="img-circle">Redondeado</label>
+		</div>
+      </div>
+    </footer>
+    <script src="_/js/bootstrap.js"></script>
+    <!--plugin para detectar si se han cargado las imágenes-->
+    <script src="_/js/imagesloader.js"></script>
+    <!--plugin para mostrar el listado de imágenes con un efecto pinterest-->
+    <script src="_/js/masonry.js"></script>
+    <script src="_/js/myscript.js"></script>
+  </body>
+</html>
