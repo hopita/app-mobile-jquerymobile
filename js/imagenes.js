@@ -223,10 +223,10 @@ var miapp = {
     */
    mostrar: function(){
    		//Almaceno la referencia al elemento donde se va mostrar el listado y lo limpio
-		var cajadatos = document.getElementById('cajadatos');
-		cajadatos.innerHTML = "";
+		var cajadatosimagenes = document.getElementById('cajadatosimagenes');
+		cajadatosimagenes.innerHTML = "";
 		
-		 //En esta variable creo el html del listado, no lo hago directamente sobre cajadatos porque no genera bien el <ul>
+		 //En esta variable creo el html del listado, no lo hago directamente sobre cajadatosimagenes porque no genera bien el <ul>
 		var texto='<ul class="list-group">';
 		//En este bucle recupero los items y los almaceno en la variable texto
 		for (var f = 0; f < localStorage.length; f++){
@@ -243,7 +243,7 @@ var miapp = {
 		}
 		texto += '</ul><div><input type="button" class="btn btn-primary" onclick="miapp.eliminarTodos()" value="Eliminar todo"></div>';
 		//Pinto el listado en patalla
-		cajadatos.innerHTML = texto;
+		cajadatosimagenes.innerHTML = texto;
 	},
 	
 	//Esta función se ejecuta al hacer click en el botón eliminar de cada item, elimina el item selecionado
