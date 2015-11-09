@@ -22,17 +22,17 @@
   </head>
   <body>
   	<section id="inicio" data-role="page">
-  		<div data-role="header">
+  		<div data-role="header" data-position="fixed" data-theme="b">
 		    <h1>App administración imágenes</h1>
-			    <div data-role="navbar">
+			    <nav data-role="navbar">
 				    <ul>
-				      <li><a href="index.html"  class="ui-btnactive" data-icon="home">Inicio</a></li>
-				      <li><a href="imagenes.html" data-icon="bullets">Imágenes</a></li>
-				      <li><a href="camara.html" data-icon="camera">Cámara</a></li>
-				      <li><a href="localizacion.html" data-icon="location">Localizacion</a></li>
+				      <li><a href="#"  class="ui-btn ui-btn-active ui-state-persist" data-icon="home">Inicio</a></li>
+				      <li><a href="imagenes.html" class="ui-btn" data-icon="bullets" rel="external">Imágenes</a></li>
+				      <li><a href="camara.html" class="ui-btn" data-icon="camera">Cámara</a></li>
+				      <li><a href="localizacion.html" class="ui-btn" data-icon="location">Localizacion</a></li>
 				    </ul>
-				 </div>
-	     </div>
+				</nav>
+	    </div>
 	     <div class="ui-content">
  
 	     	 <!--En este elemento muestro el listado de imágenes generado dinámicamente-->
@@ -53,17 +53,16 @@
 				</div>
 	  		</div>
 	     </div>
-	     <div data-role="footer">
+	     <div data-role="footer" data-position="fixed">
 	      	<form id="efectos">
 	      		<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-		      		<legend><span data-icon="gear"></span></legend>
-					<input type="radio" name="optradio" id="radio1" onclick="miapp.aplicarefecto(this.value)" value="null">
+					<input type="radio" name="optradio" id="radio1" onclick="aplicar_efecto(this.value)" value="null">
 					<label for="radio1">Ninguno</label>
-					<input type="radio" name="optradio" id="radio2" onclick="miapp.aplicarefecto(this.value)" value="sepia">
+					<input type="radio" name="optradio" id="radio2" onclick="aplicar_efecto(this.value)" value="sepia">
 					<label for="radio2">Sepia</label>
-					<input type="radio" name="optradio" id="radio3" onclick="miapp.aplicarefecto(this.value)" value="blanconegro">
+					<input type="radio" name="optradio" id="radio3" onclick="aplicar_efecto(this.value)" value="blanconegro">
 					<label for="radio3">Blanco/negro</label>
-					<input type="radio" name="optradio" id="radio4" onclick="miapp.aplicarefecto(this.value)" value="img-circle">
+					<input type="radio" name="optradio" id="radio4" onclick="aplicar_efecto(this.value)" value="img-circle">
 					<label for="radio4">Redondeado</label>
 				</fieldset
 			</form>
