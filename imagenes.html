@@ -22,26 +22,44 @@
   </head>
   <body>
   	<section id="inicio" data-role="page">
-  		<div data-role="header">
-		    <h1>App administración imágenes - Inicio</h1>
-			    <div data-role="navbar">
-				    <ul>
-				      <li><a href="index.html"  class="ui-btnactive" data-icon="home">Inicio</a></li>
-				      <li><a href="imagenes.html" data-icon="bullets">Imágenes</a></li>
-				      <li><a href="camara.html" data-icon="camera">Cámara</a></li>
-				      <li><a href="localizacion.html" data-icon="location">Localizacion</a></li>
-				    </ul>
-				 </div>
-	     </div>
-	     <div class="ui-content">
-		     <div id="botonaltas">
-				<!--Este botón lanza la ventana modal del formulario de altas-->
-				<button type='button' id="alta" data-toggle="modal" data-target="#altaModal">+</button>
+  		<div data-role="header" data-position="fixed" data-theme="b">
+		    <h1>App administración imágenes</h1>
+			<nav data-role="navbar">
+				<ul>
+				    <li><a href="index.html" class="ui-btn " data-icon="home" rel="external">Inicio</a></li>
+				    <li><a href="imagenes.html" class="ui-btn ui-btn-active ui-state-persist" data-icon="bullets">Imágenes</a></li>
+				    <li><a href="camara.html" class="ui-btn" data-icon="camera">Cámara</a></li>
+				    <li><a href="localizacion.html" class="ui-btn" data-icon="location">Localizacion</a></li>
+				</ul>
+			</nav>
+	    </div>
+	    <div class="ui-content">
+			<!--Este botón lanza la ventana modal del formulario de altas-->
+			<a id="alta" href="#altaModal" data-rel="popup" data-position-to="window" class="ui-btn ui-btn-inline">+</a>
+			<!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "alta" -->
+			<div data-role="popup" id="altaModal" data-theme="a" class="ui-corner-all" >
+				<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>				<div data-role="header" data-theme="b">
+			        <h4 id="image-gallery-title">Nueva Imagen</h4>
+			    </div>
+			    <div class="ui-content">
+					<form name="formulario" enctype="multipart/form-data">
+	                   	<label for="titulo" class="ui-hidden-accessible">Título: </label><br>
+						<input type="text" name="titulo" id="titulo" placeholder="Título"><br>
+						<label for="descripcion" class="ui-hidden-accessible">Descripción: </label><br>
+						<textarea type="text" name="descripcion" id="descripcion" placeholder="Descripción"></textarea><br>
+						<label for="archivoimagen" class="ui-hidden-accessible">Imagen*: </label><br>
+						<input type="file" name="archivoimagen" id="archivoimagen"><br>
+						<!-- Elemento donde voy a mostrar un mensaje de aviso si se selecciona un archivo que no sea una imagen-->
+						<div id="alerta"></div>
+						<!--Este botón está inactivo hasta que se seleccione una imagen, que es el único dato obligatorio para dar el alta-->
+						<button data-toggle="tooltip" data-placement="top" title="Selecciona una imagen" id="grabar" class="ui-btn ui-mini" data-theme="b" disabled="disabled">Añadir</button>
+					</form>
+			    </div>			        
 			</div>
-	     	 <!--En este elemento muestro el listado de imágenes generado dinámicamente-->
-			 <div id ="cajadatos">			       
-			 </div>
-	     </div>
+			<!--En este elemento muestro el listado de imágenes generado dinámicamente-->
+			<div id ="cajadatosimagenes">			       
+			</div>
+	    </div>
   	</section>
     
 	<main>
