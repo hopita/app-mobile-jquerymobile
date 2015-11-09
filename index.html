@@ -23,7 +23,7 @@
   <body>
   	<section id="inicio" data-role="page">
   		<div data-role="header">
-		    <h1>App administración imágenes - Inicio</h1>
+		    <h1>App administración imágenes</h1>
 			    <div data-role="navbar">
 				    <ul>
 				      <li><a href="index.html"  class="ui-btnactive" data-icon="home">Inicio</a></li>
@@ -34,15 +34,30 @@
 				 </div>
 	     </div>
 	     <div class="ui-content">
+ 
 	     	 <!--En este elemento muestro el listado de imágenes generado dinámicamente-->
 			 <div id ="cajadatos">			       
 			 </div>
+			 <div data-role="popup" id="carrusel" class="photopopup" data-overlay-theme="b" data-corners="false" data-tolerance="30,15" >
+			 	<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+		  		<div data-role="header" data-theme="b">
+		          <h4 id="image-gallery-title"></h4>
+		        </div>
+		        <div class="ui-content">
+		          <img id="image-gallery-image" class="img-responsive" src="">
+		          <button type="button" class="ui-btn ui-icon-arrow-l ui-btn-icon-notext left carousel-control" id="imagen-anterior"></button>
+				  <button type="button" class="ui-btn ui-icon-arrow-r ui-btn-icon-notext right carousel-control" id="imagen-siguiente"></button>
+		        </div>
+		        <div data-role="footer">
+					<div id="image-gallery-caption"></div>
+				</div>
+	  		</div>
 	     </div>
 	     <div data-role="footer">
 	      	<form id="efectos">
 	      		<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
 		      		<legend><span data-icon="gear"></span></legend>
-					<input type="radio" name="optradio" id="radio1" onclick="miapp.aplicarefecto(this.value)" checked="checked" value="">
+					<input type="radio" name="optradio" id="radio1" onclick="miapp.aplicarefecto(this.value)" value="null">
 					<label for="radio1">Ninguno</label>
 					<input type="radio" name="optradio" id="radio2" onclick="miapp.aplicarefecto(this.value)" value="sepia">
 					<label for="radio2">Sepia</label>
@@ -54,52 +69,9 @@
 			</form>
 	    </div>
   	</section>
+  
+  	
     
-	<main>
-		 
-		<section class="container-fluid">
-			 <div class="row content">
-			 	<!--En este elemento muestro el listado de imágenes generado dinámicamente-->
-			    <div id ="cajadatos" class="col-lg-12">			       
-			    </div>
-			</div>
-			<!--Ventana modal que carga una imagen, con botones para navegar entre las imágenes similar a un carrusel. 
-				Se abre al clickar una imagen. La imagen se carga dinámicamente, al hacer click en una imagen del listado.-->
-			<div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			    <div class="modal-dialog">
-			        <div class="modal-content">
-			            <div class="modal-body">
-			                <img id="image-gallery-image" class="img-responsive" src="">
-			                <button type="button" class="btn btn-default left carousel-control" id="imagen-anterior"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
-			                <button type="button" id="imagen-siguiente" class="btn btn-default right carousel-control"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
-			            </div>
-			            <div class="modal-footer">
-							<h4 class="modal-title text-center" id="image-gallery-title"></h4>
-							<div class="text-justify" id="image-gallery-caption">
-			                    
-			                </div>
-			                <div class="col-md-2 pull-right">
-			                	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-			                </div>
-			            </div>
-			        </div>
-			    </div>
-			</div>
-			<!-- fin image-gallery-->
-		</section>
-	</main>
-	<!--contenedor de los selectores de efectos-->
-	<footer class="panel-footer navbar-inverse navbar-fixed-bottom">
-      <div class="container-fluid">
-      	<div id="efectos" class="row">
-      		<span class="glyphicon glyphicon-cog"></span>
-			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="">Ninguno</label>
-			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="sepia">Sepia</label>
-			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="blanconegro">Blanco/negro</label>
-			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="img-circle">Redondeado</label>
-		</div>
-      </div>
-    </footer>
     <!--plugin para detectar si se han cargado las imágenes-->
     <script src="js/imagesloader.js"></script>
     <!--plugin para mostrar el listado de imágenes con un efecto pinterest-->

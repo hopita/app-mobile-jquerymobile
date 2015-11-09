@@ -46,17 +46,16 @@ var miapp = {
 	 
 	 //Función que establece el elemento chekeado cuando cargo la página
 	 ponerchecked: function(valor){
-	 	
-	 	//Almaceno las referencias a los radio buttons 
-	 	var radio = document.getElementsByName("optradio");
-	 	
 	 	//Recorro el array y si encuentro un radio button con el mismo valor pongo el atributo cheked=true
-	 	 for (var i = 0; i < radio.length; i++) {
-	    	if (radio[i].value == valor){
-	    		console.log(radio[i].value );
-	    		radio[i].checked = true;
-	    	}	    	
-		}
+	 	$("input[name*=optradio]").each(function () {
+	 		$(this).attr( "checked", false ).checkboxradio( "refresh" );
+	 		
+           if($(this).val()== valor){
+           	console.log("*"+$(this).val());
+               $(this).attr( "checked", true ).checkboxradio( "refresh" );  	
+           }
+        });
+	 	
 	 },
 	
 	//Esta función se ejecuta para determinar si alguno de los botones de navegación se tiene que esconder cdo es la primera diapositiva o la última
@@ -106,6 +105,14 @@ var miapp = {
             $('#image-gallery-image').addClass( "img-responsive");
             $('#image-gallery-image').addClass( miapp.miefecto);
             miapp.desactivarbotones(contador, $sel.data('image-id'));
+            $( ".photopopup" ).on({
+		        popupbeforeposition: function() {
+		            var maxHeight = $( window ).height() - 60 + "px";
+		            $( ".photopopup img" ).css( "max-height", maxHeight );
+		            var imgWidth = $( ".photopopup img" ).width(); 
+		            $('#image-gallery-caption').css('width', imgWidth+'px');
+		        }
+	    	});
         }
 		
 		/*Se asigna un id a cada diapositiva y se asigna a la variable contador el total de items,
@@ -143,7 +150,7 @@ var miapp = {
 				var valor = localStorage.getItem(clave);
 				var datos = JSON.parse(valor);
 			
-				texto += '<div class="thumb"><a class="thumbnail" href="#" data-image-id="" data-title="' +  datos.titulo + '" data-caption="' +  datos.descripcion + '" data-image="' + datos.imagen  + '" data-target="#image-gallery"><img class="imglistado" src="' + datos.imagen  + '" alt="Short alt text"></a></div>';
+				texto += '<div class="thumb"><a class="thumbnail" href="#carrusel" data-rel="popup" data-position-to="window" data-image-id="" data-title="' +  datos.titulo + '" data-caption="' +  datos.descripcion + '" data-image="' + datos.imagen  + '" data-target="#image-gallery"><img class="imglistado" src="' + datos.imagen  + '" alt="Short alt text"></a></div>';
 			}
 		}
 		//Pinto el listado en patalla

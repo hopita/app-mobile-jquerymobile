@@ -30,3 +30,23 @@
     border-radius: 50%;
 }
 
+.img-responsive{
+	max-width:100%;
+}
+
+button.left {
+    left: 20px;
+}
+
+button.right {
+    right: 20px;
+}
+
+#carrusel button{
+	position:absolute;
+	top:50%;
+}
+
+#carrusel{
+	text-align:center;
+}
