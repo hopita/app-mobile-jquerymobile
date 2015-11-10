@@ -9,6 +9,7 @@
     <!-- Tema customizado de jquerymobile -->
     <link rel="stylesheet" href="jquerymobile/themes/mitema.css" />
   	<link rel="stylesheet" href="jquerymobile/themes/jquery.mobile.icons.min.css" />
+  	
     <!-- Los 3 ficheros que jquerymobile necesita para trabajar -->
     <script src="js/jquery-2.1.4.js" type="text/javascript"></script>
     <script src="jquerymobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
@@ -37,18 +38,10 @@
 				</nav>
 	    </div>
 	    <div class="ui-content">
-		     <div id="reproductor">
-				<video id='media'></video>
-				<!--Botón que lanza la ventana modal con el formularo de alta y al que se le registra un detector para el evento onclick. Al hacer click se hace la foto-->
-				<nav>
-					<button type='button' id="foto" href="#altacamaraModal" data-rel="popup" data-position-to="window" class="ui-btn ui-icon-plus ui-mini  ui-btn-icon-notext ui-btn-inline"></button>
-				</nav>
-			</div>
-		    <!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "alta" -->
-			<div data-role="popup" id="altacamaraModal" data-theme="a" class="ui-corner-all" >
-				<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>				
-				<div data-role="header" data-theme="b">
-				    <h4>Modificar Imagen</h4>
+		    <!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "foto" -->
+			<div data-role="popup" id="altacamaraModal" class="ui-corner-all" >
+				<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>				<div data-role="header" data-theme="b">
+				    <h4>Alta Imagen</h4>
 				</div>
 				<div class="ui-content">
 					<form name="formulariocamara">
@@ -62,6 +55,11 @@
 				</div>			        
 			</div>
 			<!--FIn popup-->
+			<div id="reproductor">
+				<video id='media'></video>
+				<!--Botón que lanza la ventana modal con el formularo de alta y al que se le registra un detector para el evento onclick. Al hacer click se hace la foto-->
+				<button type='button' id="foto" href="#altacamaraModal" data-rel="popup" data-position-to="window" class="ui-btn ui-icon-plus ui-mini  ui-btn-icon-notext ui-btn-inline"></button>
+			</div>
 		</div>
   </section>
     <script src="js/camara.js"></script>
