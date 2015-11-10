@@ -119,8 +119,6 @@ $("document").ready(function() {
 			var key = "img_" + time;
 			var id= key;
 			
-			console.log()
-			
 			//Almaceno en  un objeto todos los datos del item a grabar
 			miImg_datos = {
 			    titulo: $('#titulo').val(),
@@ -203,6 +201,7 @@ $("document").ready(function() {
    function mostrar(){
    		//Almaceno la referencia al elemento donde se va mostrar el listado y lo limpio
 		var $cajadatosimagenes = $('#cajadatosimagenes ul');
+		$cajadatosimagenes.html("");
 		//cajadatosimagenes.innerHTML = "";
 		//Este botón lanza la ventana modal del formulario de altas
 		$cajadatosimagenes.append('<li data-role="list-divider" role="heading"><a id="alta" href="#altaModal" data-rel="popup" data-position-to="window" class="ui-btn ui-icon-plus ui-mini  ui-btn-icon-notext ui-btn-inline">+</a></li>');
