@@ -1,12 +1,14 @@
 .thumb {
   float: left;
-  width: 20%;
+  width: 23%;
   height: auto;
   margin: 5px;
+  min-width: 130px;
 }
 
 .thumb img{
   max-width: 100%;
+  
 }
 
 .thumb > * {
@@ -49,4 +51,53 @@ button.right {
 
 #carrusel{
 	text-align:center;
+}
+
+.ui-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.ui-listview > .ui-li-static {
+    padding: 0 1em;
+}
+
+.ui-page-theme-a #cajadatosimagenes a.ui-btn{
+	border: none;
+}
+
+#botonalta{
+	background: #000000;
+}
+
+#alta{
+	margin-top:0;
+	margin-bottom:0;
+}
+
+#cajadatosimagenes ul{
+	margin-top:0;
+}
+
+.ui-footer,
+.ui-controlgroup-controls .ui-btn-corner-all, 
+.ui-controlgroup-controls .ui-btn.ui-corner-all {
+    border: none;
+}
+
+.ui-listview > .ui-li-static.ui-li-has-thumb {
+    min-height: 3.625em;
+    padding-left: 8.25em;
+}
+
+.ui-listview .ui-li-has-thumb > img:first-child, .ui-listview .ui-li-has-thumb > .ui-btn > img:first-child, .ui-listview .ui-li-has-thumb .ui-li-thumb {
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-height: 7em;
+    max-width: 7em;
+}
+
+.ui-listview > .ui-li-static, .ui-listview > .ui-li-divider, .ui-listview > li > a.ui-btn {
+    white-space: normal;
 }

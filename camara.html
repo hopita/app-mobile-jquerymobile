@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>App Administración Imágenes | Cámara</title>
-    <!-- Los 3 ficheros que jquerymobile necesita para trabajar -->
     
+    <!-- Tema customizado de jquerymobile -->
+    <link rel="stylesheet" href="jquerymobile/themes/mitema.css" />
+  	<link rel="stylesheet" href="jquerymobile/themes/jquery.mobile.icons.min.css" />
+    <!-- Los 3 ficheros que jquerymobile necesita para trabajar -->
     <script src="js/jquery-2.1.4.js" type="text/javascript"></script>
     <script src="jquerymobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
     
@@ -21,89 +24,46 @@
     <![endif]-->
   </head>
   <body>
-  	<section id="inicio" data-role="page">
-  		<div data-role="header">
-		    <h1>App administración imágenes - Inicio</h1>
-			    <div data-role="navbar">
+  	<section id="camara" data-role="page" data-theme="c">
+  		<div data-role="header" data-position="fixed">
+		    <h1>App administración imágenes</h1>
+			    <nav data-role="navbar">
 				    <ul>
-				      <li><a href="index.html"  class="ui-btnactive" data-icon="home">Inicio</a></li>
-				      <li><a href="#imagenes" data-icon="bullets">Imágenes</a></li>
-				      <li><a href="camara.html" data-icon="camera">Cámara</a></li>
-				      <li><a href="localizacion.html" data-icon="location">Localizacion</a></li>
+				      <li><a href="index.html"  class="ui-btn " data-icon="home" rel="external">Inicio</a></li>
+				      <li><a href="imagenes.html" class="ui-btn" data-icon="bullets" rel="external">Imágenes</a></li>
+				      <li><a href="#" class="ui-btn ui-btn-active ui-state-persist" data-icon="camera">Cámara</a></li>
+				      <li><a href="localizacion.html" class="ui-btn" data-icon="location" rel="external">Localizacion</a></li>
 				    </ul>
-				 </div>
-	     </div>
-	     <div class="ui-content">
-	     	 <!--En este elemento muestro el listado de imágenes generado dinámicamente-->
-			 <div id ="cajadatos">			       
-			 </div>
-	     </div>
-	     <div data-role="footer">
-	      	<form id="efectos">
-	      		<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-		      		<legend><span data-icon="gear"></span></legend>
-					<input type="radio" name="optradio" id="radio1" onclick="miapp.aplicarefecto(this.value)" checked="checked" value="">
-					<label for="radio1">Ninguno</label>
-					<input type="radio" name="optradio" id="radio2" onclick="miapp.aplicarefecto(this.value)" value="sepia">
-					<label for="radio2">Sepia</label>
-					<input type="radio" name="optradio" id="radio3" onclick="miapp.aplicarefecto(this.value)" value="blanconegro">
-					<label for="radio3">Blanco/negro</label>
-					<input type="radio" name="optradio" id="radio4" onclick="miapp.aplicarefecto(this.value)" value="img-circle">
-					<label for="radio4">Redondeado</label>
-				</fieldset
-			</form>
+				</nav>
 	    </div>
-  	</section>
-    
-	<main>
-		 
-		<section class="container-fluid">
-			 <div class="row content">
-			 	<!--En este elemento muestro el listado de imágenes generado dinámicamente-->
-			    <div id ="cajadatos" class="col-lg-12">			       
-			    </div>
+	    <div class="ui-content">
+		     <div id="reproductor">
+				<video id='media'></video>
+				<!--Botón que lanza la ventana modal con el formularo de alta y al que se le registra un detector para el evento onclick. Al hacer click se hace la foto-->
+				<nav>
+					<button type='button' id="foto" href="#altacamaraModal" data-rel="popup" data-position-to="window" class="ui-btn ui-icon-plus ui-mini  ui-btn-icon-notext ui-btn-inline"></button>
+				</nav>
 			</div>
-			<!--Ventana modal que carga una imagen, con botones para navegar entre las imágenes similar a un carrusel. 
-				Se abre al clickar una imagen. La imagen se carga dinámicamente, al hacer click en una imagen del listado.-->
-			<div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			    <div class="modal-dialog">
-			        <div class="modal-content">
-			            <div class="modal-body">
-			                <img id="image-gallery-image" class="img-responsive" src="">
-			                <button type="button" class="btn btn-default left carousel-control" id="imagen-anterior"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
-			                <button type="button" id="imagen-siguiente" class="btn btn-default right carousel-control"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
-			            </div>
-			            <div class="modal-footer">
-							<h4 class="modal-title text-center" id="image-gallery-title"></h4>
-							<div class="text-justify" id="image-gallery-caption">
-			                    
-			                </div>
-			                <div class="col-md-2 pull-right">
-			                	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-			                </div>
-			            </div>
-			        </div>
-			    </div>
+		    <!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "alta" -->
+			<div data-role="popup" id="altacamaraModal" data-theme="a" class="ui-corner-all" >
+				<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>				
+				<div data-role="header" data-theme="b">
+				    <h4>Modificar Imagen</h4>
+				</div>
+				<div class="ui-content">
+					<form name="formulariocamara">
+						<div><canvas id="canvas" width="320" height="240"></canvas></div>
+		                <label for="titulocamara" class="ui-hidden-accessible">Título: </label><br>
+						<input type="text" name="titulocamara" id="titulocamara" placeholder="Título"><br>
+						<label for="descripcioncamara" class="ui-hidden-accessible">Descripción: </label><br>
+						<textarea type="text" name="descripcion" id="descripcioncamara" placeholder="Descripción"></textarea><br>
+						<input type="button" class="ui-btn ui-mini" id="grabarcamara" value="Grabar">
+					</form>
+				</div>			        
 			</div>
-			<!-- fin image-gallery-->
-		</section>
-	</main>
-	<!--contenedor de los selectores de efectos-->
-	<footer class="panel-footer navbar-inverse navbar-fixed-bottom">
-      <div class="container-fluid">
-      	<div id="efectos" class="row">
-      		<span class="glyphicon glyphicon-cog"></span>
-			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="">Ninguno</label>
-			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="sepia">Sepia</label>
-			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="blanconegro">Blanco/negro</label>
-			<label class="radio-inline"><input type="radio" name="optradio" onclick="miapp.aplicarefecto(this.value)" value="img-circle">Redondeado</label>
+			<!--FIn popup-->
 		</div>
-      </div>
-    </footer>
-    <!--plugin para detectar si se han cargado las imágenes-->
-    <script src="js/imagesloader.js"></script>
-    <!--plugin para mostrar el listado de imágenes con un efecto pinterest-->
-    <script src="js/masonry.js"></script>
-    <script src="js/myscript.js"></script>
+  </section>
+    <script src="js/camara.js"></script>
   </body>
 </html>

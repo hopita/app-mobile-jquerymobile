@@ -1,88 +1,66 @@
-//Declaro objeto global
-var miapp = {
+$("document").ready(function() {
 	/*Variable para almacenar los datos de la imagen*/
-	miimagen:"",
+	var miImagen,
 	/* Variable para almacenar la referencia al elemento type file de formulario*/
-	miarchivo:"",
+	miArchivo,
 	/* Variable para almacenar el objeto con los datos del item a almacenar o modificar*/
-	miimg_datos:"",
+	miImg_datos,
 	/*Variable para almacenar la referencia al botón de altas */
-	mibotongrabar:"",
-	//Variables que almacenan las referencias a los elementos título y descripción de los formularios de alta y modificación 
-	mititulo:"",
-	midescripcion:"",
-	mitituloeditar:"",
-	midescripcioneditar:"",	
-	
-	//variable para almacenar la referencia al elemento alerta del formulario de altas
-	mialerta:"",
-	
-	iniciar: function(){
+	miBotongrabar;
+
+	/* Almaceno la referencia al elemento type file de formulario y le registro un detector para el evento 'onchange'*/
+	$miArchivo = $('#archivoimagen');
+	$miArchivo.on("change", procesarfile );
 		
-		//Almaceno las referencias al titulo y la descripción del formulario de alta
-		miapp.mititulo = document.getElementById('titulo');
-		miapp.midescripcion = document.getElementById('descripcion');
+	/* Almaceno la referencia al elemento type button con id grabar de formulario y le registro un detector para el evento 'onclick'*/
+	$miBotongrabar = $('#grabar');
+	$miBotongrabar.on('click', nuevoitem);
 		
-		//Almaceno las referencias al titulo y la descripción del formulario de modificación
-		miapp.mitituloeditar = document.getElementById('tituloeditar');
-		miapp.midescripcioneditar = document.getElementById('descripcioneditar');
+	/* Almaceno la referencia al elemento type button con id grabareditar de formularioeditar y le registro un detector para el evento 'onclick'*/
+	var $botoneditar = $('#grabareditar');
+	$botoneditar.on('click', modificaritem);
 		
-		/* Almaceno la referencia al elemento type file de formulario y le registro un detector para el evento 'onchange'*/
-		miapp.miarchivo = document.getElementById('archivoimagen');
-		miapp.miarchivo.addEventListener('change', this.procesarfile);
+	//El evento popupafterclose se lanza cuando la ventana(en este caso de alta) se cierra.
+	$('#altaModal').on('popupafterclose',resetformalta);
 		
-		/* Almaceno la referencia al elemento type button con id grabar de formulario y le registro un detector para el evento 'onclick'*/
-		miapp.mibotongrabar = document.getElementById('grabar');
-		miapp.mibotongrabar.addEventListener('click', this.nuevoitem);
-		
-		/* Almaceno la referencia al elemento type button con id grabareditar de formularioeditar y le registro un detector para el evento 'onclick'*/
-		var botoneditar = document.getElementById('grabareditar');
-		botoneditar.addEventListener('click', this.modificaritem);
-		
-		//El evento hide.bs.modal se lanza cuando la ventana(en este caso de alta) se cierra.
-		$('#altaModal').on('hidden.bs.modal',miapp.resetformalta);
-		
-		/* Ejecuto la función mostrar()*/
-		this.mostrar();
-	},
-	
-	/*
+	/* Ejecuto la función mostrar()*/
+	mostrar();
+});
+
+/*
 	* Si el archivo no es una imagen, creo una referencia al elemento alerta e inserto el texto de aviso y le asigno la clase text-danger para mostralo con el texto en rojo
 	*/
-	mostraralerta: function(){
-		
-			miapp.mialerta = document.getElementById('alerta');
-			miapp.mialerta.innerHTML = "El tipo de archivo no es correcto";
-			miapp.mialerta.className = "text-danger";
-	},
+	function mostraralerta(){
+
+		$('#alerta').html("El tipo de archivo no es correcto");
+	}
 	
 	/* Función que resetea el elemento alerta*/
-	resetalerta: function(){
-		miapp.mialerta.innerHTML = "";
-		miapp.mialerta.className = "";
-	},
+	function resetalerta(){
+		$('#alerta').html("");
+	}
 	
 	//Esta función se ejecuta cuando se cierra la ventana modal que contiene el formulario de altas
-	resetformalta: function(){
+	function resetformalta(){
 		/*
 		*Limpio todos los campos del formulario de alta.
 		* Por ejemplo si selecciono un fichero y cierro la ventana sin grabarlo,
 		* cdo vuelvo a abrir la ventana de altas, aún tengo seleccionado el fichero, 
 		* para evitar esto, es por lo que limpio los campos del formulario.
 		*/ 
-		miapp.mititulo.value="";
-		miapp.midescripcion.value="";
-		miapp.miarchivo.value="";
+		$('#titulo').val("");
+		$('#descripcion').val("");
+		$miArchivo.val("");
 		
 		//Reseteo el elemento alerta
-		miapp.resetalerta();
+		resetalerta();
 		
 		//Desactivo el botón de grabación del formulario de altas
-		miapp.mibotongrabar.setAttribute("disabled", "disabled");
-	},
+		$miBotongrabar.attr("disabled", "disabled");
+	}
 	
 	/* Esta función se ejecuta cuando seleccionamos un archivo desde nuestro ordenador */
-	procesarfile: function(e){
+	function procesarfile(e){
 		 /*
 		  * La propiedad files enviada por el evento onchange de archivoimagen es una matriz, que contiene todos los archivos seleccionados.
 		  * La almacenamos en el array archivos.
@@ -100,18 +78,18 @@ var miapp = {
 		if (archivo.type == "image/png" || archivo.type == "image/jpg" || archivo.type == "image/jpeg") {
 			
 			// Elimino la alerta, si existiese
-			miapp.resetalerta();
+			resetalerta();
 			
 			//Activo el botón del formulario de alta
-			miapp.mibotongrabar.removeAttribute("disabled");
+			$miBotongrabar.removeAttr("disabled");
 			
 			//Creo el objeto lector, lo necesitamos para leer el archivo
 			var lector = new FileReader();
 			/*
 			 * Registro un detector para el evento onload con el objetivo de detectar cuando se carga el archivo.
-			 * Guardo en la variable miapp.miimagen el contenido del  archivo, que tomamos de la propiedad result del objeto lector
+			 * Guardo en la variable miImagen el contenido del  archivo, que tomamos de la propiedad result del objeto lector
 			 */
-			lector.addEventListener('load', function(e){miapp.miimagen=e.target.result;});	
+			lector.addEventListener('load', function(e){miImagen=e.target.result;});	
 			/*
 			 * El método readAsDataURL() genera una cadena del tipo dat:url codificada en base64 que representa los datos de archivo.
 			 * Cuando este método finaliza la lectura del archivo, el evento load se dispara. 
@@ -123,16 +101,15 @@ var miapp = {
 			//Si el archivo no es una imagen 
 			
 			//Muestro un aviso
-			miapp.mostraralerta();
+			mostraralerta();
 			
 			//Desactivo el botón de grabación del formulario de altas
-			miapp.mibotongrabar.setAttribute("disabled", "disabled");
+			$miBotongrabar.attr("disabled", "disabled");
 		}
-	},
+	}
 	
 	// Esta función ejecuta el código para hacer altas de nuevas imágenes
-	nuevoitem: function(){
-
+	function nuevoitem(){
 			/*
 			 * El método getTime() me devuelde el número de mm desde 1970/01/01
 			 * Lo voy a utilizar, junto con el string "img_" para generar una clave para el elemento que voy a almacenar
@@ -142,39 +119,41 @@ var miapp = {
 			var key = "img_" + time;
 			var id= key;
 			
+			console.log()
+			
 			//Almaceno en  un objeto todos los datos del item a grabar
-			miapp.miimg_datos = {
-			    titulo: miapp.mititulo.value,
-			    descripcion: miapp.midescripcion.value,
-			    imagen: miapp.miimagen			
+			miImg_datos = {
+			    titulo: $('#titulo').val(),
+			    descripcion: $('#descripcion').val(),
+			    imagen: miImagen			
 			};
 			
 			/*
 			 * Con el método JSON.stringify() convierto el objeto javascript a una cadena JSON
 			 * Y llamo al método setItem() para crear un item
 			 */
-			localStorage.setItem(id, JSON.stringify(miapp.miimg_datos));
+			localStorage.setItem(id, JSON.stringify(miImg_datos));
 			
 			//Cierro la ventana modal donde se encuentra el formulario
-			$('#altaModal').modal('hide');
+			$("#altaModal" ).popup( "close" );
 
 			//Ejecuto mostrar() para actualizar el listado y que se muestre el nuevo item
-			miapp.mostrar();
+			mostrar();
 		
-	},
+	}
 
 	//Esta función se ejecuta al hacer click en el botón Modificar de formularioeditar
-   modificaritem: function(){
+   function modificaritem(){
 		//Almaceno en variables el contenido de los campos id y datos de la imagen del item a modificar del formulario formularioeditar
 		//En el elemento idrecord he almacenado el id del item a modificar
-		var id = document.getElementById('idrecord').value;		
-		var imagensrc = document.getElementById('imageneditar').src;
+		var $id = $('#idrecord').val();		
+		var $imagensrc = $('#imageneditar').attr('src');
 		
 		//Almaceno en  un objeto todos los datos del item a modificar
-		miapp.miimg_datos = {
-		    titulo: miapp.mitituloeditar.value,
-		    descripcion: miapp.midescripcioneditar.value,
-		    imagen: imagensrc
+		miImg_datos = {
+		    titulo: $('#tituloeditar').val(),
+		    descripcion: $('#descripcioneditar').val(),
+		    imagen: $imagensrc
 		
 		};
 		
@@ -182,26 +161,26 @@ var miapp = {
 		* Con el método JSON.stringify() convierto el objeto javascript a una cadena JSON
 		* Y llamo al método set.Item() para actualizar el item
 		*/
-		localStorage.setItem(id, JSON.stringify(miapp.miimg_datos));
+		localStorage.setItem($id, JSON.stringify(miImg_datos));
 		
 		//Cierro la ventana modal donde se encuentra el formulario de modificación
-		$('#modificacionModal').modal('hide');
+		$("#modificacionModal" ).popup( "close" );
 		
 		//Ejecuto mostrar() para actualizar el listado.
-		miapp.mostrar();
-	},
+		mostrar();
+	}
 	
 	/*
 	 * Esta función se ejecuta al hacer click sobre el botón editar del listado.
 	 * Se le pasa como parámetro el id de la imagen a modificar
 	 * Muestra en el formuario los datos del item a modificar
 	 */	
-  	dameitem: function(clave){
+  	function dameitem(clave){
 		
 		//Almaceno las referencias a los diferentes campos de formularioeditar
 		//El elemento idrecord es un campo de tipo hidden donde almacenaré el id de la imagen, para posteriormente grabarla
-		var id=document.getElementById('idrecord');
-		var cajaimagen = document.getElementById('cajaimagen');
+		var $id=$('#idrecord');
+		var $cajaimagen = $('#cajaimagen');
 		
 		/*
 		 * Llamo al método get.Item() para obtener el valor del item a modificar
@@ -211,23 +190,24 @@ var miapp = {
 		var datos = JSON.parse(valor);
 		
 		//Asigno estos datos a los campos del formulario para mostrarlos
-		id.value = clave;
-		miapp.mitituloeditar.value = datos.titulo;
-		miapp.midescripcioneditar.value = datos.descripcion;
-		cajaimagen.innerHTML = '<img id="imageneditar" class="img-responsive" src="' + datos.imagen + '" >';
-	},
+		$id.val(clave);
+		$('#tituloeditar').val(datos.titulo);
+		$('#descripcioneditar').val(datos.descripcion);
+		$cajaimagen.html('<img id="imageneditar" class="img-responsive" src="' + datos.imagen + '" >');
+	}
 
    /*
     * Esta función se ejecuta al cargar la página y cada vez que se modifica un item o se da un alta de un nuevo item.
     * Se encarga de recuperar los items y pintarlos en pantalla
     */
-   mostrar: function(){
+   function mostrar(){
    		//Almaceno la referencia al elemento donde se va mostrar el listado y lo limpio
-		var cajadatosimagenes = document.getElementById('cajadatosimagenes');
-		cajadatosimagenes.innerHTML = "";
-		
+		var $cajadatosimagenes = $('#cajadatosimagenes ul');
+		//cajadatosimagenes.innerHTML = "";
+		//Este botón lanza la ventana modal del formulario de altas
+		$cajadatosimagenes.append('<li data-role="list-divider" role="heading"><a id="alta" href="#altaModal" data-rel="popup" data-position-to="window" class="ui-btn ui-icon-plus ui-mini  ui-btn-icon-notext ui-btn-inline">+</a></li>');
 		 //En esta variable creo el html del listado, no lo hago directamente sobre cajadatosimagenes porque no genera bien el <ul>
-		var texto='<ul class="list-group">';
+		var texto='';
 		//En este bucle recupero los items y los almaceno en la variable texto
 		for (var f = 0; f < localStorage.length; f++){
 			var clave = localStorage.key(f);
@@ -238,25 +218,27 @@ var miapp = {
 				var valor = localStorage.getItem(clave);
 				var datos = JSON.parse(valor);
 				
-				texto += '<li class="list-group-item"><div class="col-sm-2"><img class="" src="' + datos.imagen  + '" ></div><div class="col-sm-10"><h2 class="h4">' +  datos.titulo + '</h2>' + datos.descripcion + '</div><div class="botones col-sm-10"><button type="button" onclick="miapp.dameitem(\'' + clave + '\')" data-toggle="modal" data-target="#modificacionModal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button><button type="button" onclick="miapp.eliminar(\'' + clave + '\')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></div></li>';
+				texto += '<li><img class="" src="' + datos.imagen  + '" ><h2 class="h4">' +  datos.titulo + '</h2>' + datos.descripcion + '<div><a class="ui-btn ui-icon-edit ui-mini  ui-btn-icon-notext ui-btn-inline"  data-icon="edit" href="#modificacionModal" data-rel="popup" data-position-to="window" onclick="dameitem(\'' + clave + '\')"></a><a class="ui-btn ui-icon-delete ui-mini  ui-btn-icon-notext ui-btn-inline" onclick="eliminar(\'' + clave + '\')"></a></div></li>';
 			}
 		}
-		texto += '</ul><div><input type="button" class="btn btn-primary" onclick="miapp.eliminarTodos()" value="Eliminar todo"></div>';
+
 		//Pinto el listado en patalla
-		cajadatosimagenes.innerHTML = texto;
-	},
+		$cajadatosimagenes.append(texto);
+		//Ahora tengo que refrescar para que el framework jquerymobile aplique las clases a los elemento recientemente creados
+		 $cajadatosimagenes.listview().listview('refresh');
+	}
 	
 	//Esta función se ejecuta al hacer click en el botón eliminar de cada item, elimina el item selecionado
-   eliminar: function(clave){
+   function eliminar(clave){
 	
 		if (confirm('¿Va a eliminar un item, está seguro?')){
 			localStorage.removeItem(clave);
 		}
-		miapp.mostrar();
-	},
+		mostrar();
+	}
 	
 	//Esta función se ejecuta al hacer click en el botom 'Eliminar todos'
-   eliminarTodos: function(){
+   function eliminarTodos(){
    	
 		if (confirm('¿Va a eliminar todos los items,Está seguro?')){
 			//Guardo el total de items en esta variable porque tengo que recorrer el bucle tantas veces como items hay antes de eliminar ninguno
@@ -271,10 +253,6 @@ var miapp = {
 					localStorage.removeItem(clave);
 				}
 			}
-			miapp.mostrar();
+			mostrar();
 		}
 	}
-	
-};
-//Registramos un detector para el evento onload al objeto Document, para que cuando se haya cargado la página ejecute iniciar()
-addEventListener('load', function(){miapp.iniciar();});
