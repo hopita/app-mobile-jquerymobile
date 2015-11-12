@@ -1,4 +1,9 @@
-$("document").ready(function() {
+/**
+ * Ajax is used to load the contents of each page into the DOM as you navigate. 
+ * Because of this $(document).ready() will trigger before your first page is loaded 
+ * and every code intended for page manipulation will be executed after a page refresh. 
+ */
+$(document).on('pagecreate', function() {
 	/*Variable para almacenar los datos de la imagen*/
 	var miImagen,
 	/* Variable para almacenar la referencia al elemento type file de formulario*/
@@ -22,7 +27,8 @@ $("document").ready(function() {
 		
 	//El evento popupafterclose se lanza cuando la ventana(en este caso de alta) se cierra.
 	$('#altaModal').on('popupafterclose',resetformalta);
-		
+	
+	
 	/* Ejecuto la función mostrar()*/
 	mostrar();
 });

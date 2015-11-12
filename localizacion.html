@@ -6,14 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>App Administración Imágenes | Geocalización</title>
     
-    <!-- Tema customizado de jquerymobile -->
-    <link rel="stylesheet" href="jquerymobile/themes/mitema.css" />
-  	<link rel="stylesheet" href="jquerymobile/themes/jquery.mobile.icons.min.css" />
-    <!-- Los 3 ficheros que jquerymobile necesita para trabajar -->    
+     <!-- Tema customizado de jquerymobile -->
+    <link rel="stylesheet" href="css/themes/mitema.min.css" />
+  	<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+  	
+    <!-- Los ficheros que jquerymobile necesita para trabajar -->
     <script src="js/jquery-2.1.4.js" type="text/javascript"></script>
-    <script src="jquerymobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+    <script>
+		$( document ).on( "mobileinit", function() {		 
+		  // We want popups to cover the page behind them with a dark background
+		  $.mobile.popup.prototype.options.overlayTheme = "b";
+		  $.mobile.defaultPageTransition='slide';
+		});
+	</script>
+    <script src="js/jquery.mobile.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/jquery.mobile.css" />
     
-    <link rel="stylesheet" href="jquerymobile/jquery.mobile-1.4.5.css" />
     <link rel="stylesheet" href="css/misestilos.css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -31,7 +39,7 @@
   </head>
   <body>
   	<section id="localizacion" data-role="page" data-theme="c">
-  		<div data-role="header" data-position="fixed">
+  		<header data-role="header" data-position="fixed">
 		    <h1>App administración imágenes</h1>
 			    <nav data-role="navbar">
 				    <ul>
@@ -41,11 +49,11 @@
 				      <li><a href="#" class="ui-btn ui-btn-active ui-state-persist" data-icon="location">Localizacion</a></li>
 				    </ul>
 				</nav>
-	    </div>
-	     <div class="ui-content">
+	    </header><!--header-->
+	     <div data-role="content">
 	     	 <!--En este elemento muestro el mapa de google con nuestra localización-->
     		<div id="mapa"></div>
-	     </div>
+	     </div><!--content-->
 	     
   	</section>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>

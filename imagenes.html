@@ -7,14 +7,21 @@
     <title>App Administración Imágenes | Imágenes</title>
     
     <!-- Tema customizado de jquerymobile -->
-    <link rel="stylesheet" href="jquerymobile/themes/mitema.css" />
-  	<link rel="stylesheet" href="jquerymobile/themes/jquery.mobile.icons.min.css" />
-    
-    <!-- Los 3 ficheros que jquerymobile necesita para trabajar -->
+    <link rel="stylesheet" href="css/themes/mitema.min.css" />
+  	<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+  	
+    <!-- Los ficheros que jquerymobile necesita para trabajar -->
     <script src="js/jquery-2.1.4.js" type="text/javascript"></script>
-    <script src="jquerymobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+    <script>
+		$( document ).on( "mobileinit", function() {		 
+		  // We want popups to cover the page behind them with a dark background
+		  $.mobile.popup.prototype.options.overlayTheme = "b";
+		  $.mobile.defaultPageTransition='slide';
+		});
+	</script>
+    <script src="js/jquery.mobile.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/jquery.mobile.css" />
     
-    <link rel="stylesheet" href="jquerymobile/jquery.mobile-1.4.5.css" />
     <link rel="stylesheet" href="css/misestilos.css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -23,10 +30,11 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
   </head>
   <body>
   	<section id="imagenes" data-role="page" data-theme="c">
-  		<div data-role="header" data-position="fixed">
+  		<header data-role="header" data-position="fixed">
 		    <h1>App administración imágenes</h1>
 			<nav data-role="navbar">
 				<ul>
@@ -36,11 +44,11 @@
 				    <li><a href="localizacion.html" class="ui-btn" data-icon="location" rel="external">Localizacion</a></li>
 				</ul>
 			</nav>
-	    </div>
-	    <div class="ui-content">
+	    </header><!--header-->
+	    <div data-role="content">
 			<!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "alta" -->
 			<div data-role="popup" id="altaModal" class="ui-corner-all" >
-				<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>				
+				<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>				
 				<div data-role="header" data-theme="b">
 			        <h4>Nueva Imagen</h4>
 			    </div>
@@ -55,7 +63,7 @@
 						<!-- Elemento donde voy a mostrar un mensaje de aviso si se selecciona un archivo que no sea una imagen-->
 						<div id="alerta"></div>
 						<!--Este botón está inactivo hasta que se seleccione una imagen, que es el único dato obligatorio para dar el alta-->
-						<button data-toggle="tooltip" data-placement="top" title="Selecciona una imagen" id="grabar" class="ui-btn ui-mini"  disabled="disabled">Añadir</button>
+						<button id="grabar" class="ui-btn ui-mini"  disabled="disabled">Añadir</button>
 					</form>
 			    </div>			        
 			</div>
@@ -70,7 +78,7 @@
 			
 			<!--Ventana modal con el formulario de modificaciones, esta ventana se abre cuando se hace click en el botón editar en el listado -->
 			<div data-role="popup" id="modificacionModal" data-theme="a" class="ui-corner-all" >
-				<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>				
+				<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>				
 				<div data-role="header" data-theme="b">
 			        <h4>Modificación Datos Imagen</h4>
 			    </div>
@@ -82,11 +90,11 @@
 						<input type="text" name="tituloeditar" id="tituloeditar" placeholder="Título"><br>
 						<label for="descripcioneditar" class="ui-hidden-accessible">Descripción: </label><br>
 						<textarea type="text" name="descripcioneditar" id="descripcioneditar" placeholder="Descripción"></textarea><br>
-						<input type="button" class="ui-btn ui-mini" id="grabareditar" data-theme="b" value="Modificar">
+						<input type="button"  id="grabareditar" data-theme="b" value="Modificar">
 					</form>
 			    </div>			        
 			</div>
-	    </div>
+	    </div><!--content-->
   	</section>
 
     <script src="js/imagenes.js"></script>
