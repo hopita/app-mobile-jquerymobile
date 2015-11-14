@@ -101,3 +101,8 @@ button.right {
 .ui-listview > .ui-li-static, .ui-listview > .ui-li-divider, .ui-listview > li > a.ui-btn {
     white-space: normal;
 }
+
+video{
+	display:block;
+	margin:0 auto;
+}
