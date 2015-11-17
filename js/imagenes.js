@@ -1,9 +1,4 @@
-/**
- * Ajax is used to load the contents of each page into the DOM as you navigate. 
- * Because of this $(document).ready() will trigger before your first page is loaded 
- * and every code intended for page manipulation will be executed after a page refresh. 
- */
-$(document).on('pagecreate', function() {
+$("document").ready(function() {
 	/*Variable para almacenar los datos de la imagen*/
 	var miImagen,
 	/* Variable para almacenar la referencia al elemento type file de formulario*/
@@ -223,7 +218,7 @@ $(document).on('pagecreate', function() {
 				var valor = localStorage.getItem(clave);
 				var datos = JSON.parse(valor);
 				
-				texto += '<li><img class="" src="' + datos.imagen  + '" ><h2 class="h4">' +  datos.titulo + '</h2>' + datos.descripcion + '<div><a class="ui-btn ui-icon-edit ui-mini  ui-btn-icon-notext ui-btn-inline"  data-icon="edit" href="#modificacionModal" data-rel="popup" data-position-to="window" onclick="dameitem(\'' + clave + '\')"></a><a class="ui-btn ui-icon-delete ui-mini  ui-btn-icon-notext ui-btn-inline" onclick="eliminar(\'' + clave + '\')"></a></div></li>';
+				texto += '<li><img class="" src="' + datos.imagen  + '" ><h2 class="h4">' +  datos.titulo + '</h2>' + datos.descripcion + '<div><a class="ui-btn ui-icon-edit ui-mini  ui-btn-icon-notext ui-btn-inline" href="#modificacionModal" data-rel="popup" data-position-to="window" onclick="dameitem(\'' + clave + '\')"></a><a class="ui-btn ui-icon-delete ui-mini  ui-btn-icon-notext ui-btn-inline" onclick="eliminar(\'' + clave + '\')"></a></div></li>';
 			}
 		}
 
@@ -252,11 +247,7 @@ $(document).on('pagecreate', function() {
 			for (var f = 0; f < totalInicial; f++){
 				//En cada iteración se elimina el primer item
 				var clave = localStorage.key(0);
-				//Me aseguro de que el item que voy a eliminar es una imagen (las he grabado con prefijo "img_")
-				var n = clave.indexOf("img_");
-				if (n>-1){
-					localStorage.removeItem(clave);
-				}
+				localStorage.removeItem(clave);
 			}
 			mostrar();
 		}

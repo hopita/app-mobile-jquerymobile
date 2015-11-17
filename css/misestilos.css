@@ -110,3 +110,10 @@ video{
 #foto{
 	margin:-43px auto 0;
 }
+
+#image-gallery-caption{
+	max-width:98%;
+	font-weight:normal;
+	padding: 10px;
+	text-align:left;
+}

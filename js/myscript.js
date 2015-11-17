@@ -1,6 +1,11 @@
 $("document").ready(function() {
+	//Variable para almacenar el efecto seleccionado.
 	var miEfecto;
-	$( "[data-role='header'], [data-role='footer']" ).toolbar();
+	//Para prevenir que la imagen sea más alta que la pantalla
+	
+    
+	//Compruebo si hay imágenes almacenadas en localStorage, si no ejecuto resetapp()
+	if (!hayImagenes()) resetapp();
 	mostrar();
 });
 
@@ -10,7 +15,7 @@ function mostrar(){
 	var texto ="";
 	
 	$cajadatos.html("");
-		
+
 	//En este bucle recupero los items y los almaceno en la variable texto
 	for (var f = 0; f < localStorage.length; f++){
 		var clave = localStorage.key(f);
@@ -21,7 +26,7 @@ function mostrar(){
 			var valor = localStorage.getItem(clave);
 			var datos = JSON.parse(valor);
 			
-			texto += '<div class="thumb"><a class="thumbnail" href="#carrusel" data-rel="popup" data-position-to="window" data-image-id="" data-title="' +  datos.titulo + '" data-caption="' +  datos.descripcion + '" data-image="' + datos.imagen  + '" data-target="#image-gallery"><img class="imglistado" src="' + datos.imagen  + '" alt="Short alt text"></a></div>';
+			texto += '<div class="thumb"><a class="thumbnail" href="#carrusel" data-rel="popup" data-position-to="#inicio header"  data-image-id="" data-title="' +  datos.titulo + '" data-caption="' +  datos.descripcion + '" data-image="' + datos.imagen  + '" data-target="#image-gallery"><img class="imglistado" src="' + datos.imagen  + '" alt="Short alt text"></a></div>';
 		}
 	}
 	
@@ -60,7 +65,6 @@ function init_masonry(){
 
 //Función que aplica el efecto seleccionado a todas las imágenes del listado
 function aplicar_efecto(efecto) {
-	    console.log(efecto);
 	    //Recorro el array con las imágenes y le asigno la clase con el nombre del efecto que voy a utilizar en el css
 		$('.imglistado').each(function () {
 			$(this).attr('class', 'imglistado ' + efecto);
@@ -110,7 +114,8 @@ function cargar_galeria(){
         selector,
         contador = 0;
 		
-	//Cuando se hace click en los botones de navegación se determina qué dispositiva se debe visualizar y se llama a la función actualizagaleria() 		a la que se le pasa el id de la dispositiva que se debe mostrar
+	//Cuando se hace click en los botones de navegación se determina qué dispositiva se debe visualizar y se llama a la función actualizagaleria() 		
+	//a la que se le pasa el id de la dispositiva que se debe mostrar
     $('#imagen-siguiente, #imagen-anterior').click(function(){
         if($(this).attr('id') == 'imagen-anterior'){
             imagen_actual--;
@@ -123,7 +128,7 @@ function cargar_galeria(){
 	});
 		
 	/*
-	*Se muestra la imagen actual con el título y la descripción y se determina si se debe ocultar alguno de los botones de navegación
+	*Se muestra la imagen actual con el título y la descripción y se llama a la función que activa o desactiva los botones
 	* A esta función se le llama cada vez que hacemos click en uno de los botones de navegación y cuando se hace click a una de las miniaturas del listado
 	*/
     function actualiza_galeria(selector) {
@@ -131,19 +136,41 @@ function cargar_galeria(){
         imagen_actual = $sel.data('image-id');
         $('#image-gallery-caption').text($sel.data('caption'));
         $('#image-gallery-title').text($sel.data('title'));
-        $('#image-gallery-image').attr('src', $sel.data('image'));
-        $('#image-gallery-image').removeClass( );
-        $('#image-gallery-image').addClass( "img-responsive");
-        $('#image-gallery-image').addClass(miEfecto);
+
         desactivar_botones(contador, $sel.data('image-id'));
-        $( ".photopopup" ).on({
-		    popupbeforeposition: function() {
-		        var maxHeight = $( window ).height() - 60 + "px";
-		        $( ".photopopup img" ).css( "max-height", maxHeight );
-		        var imgWidth = $( ".photopopup img" ).width(); 
-		        $('#image-gallery-caption').css('width', imgWidth+'px');
-		    }
-	    });
+        
+        //Almaceno la altura máxima que le voy a asignar a la imagen 
+        //para no tener que hacer scroll vertical (los 200px son del caption y del título)
+        var maxHeight = $( window ).height() - 200 + "px";
+        
+        //Creo el elemento <img>
+        var imgData = $sel.data('image');    
+		var img = new Image();       
+		img.onload = function(){
+		  //Añado al DOM el elemento img que acabo de crear
+		  $('#imagen').html(img);
+		  //Le asigno la altura máxima
+		  $(this).css( "max-height", maxHeight );
+		  //Recupero el ancho de la imagen despues de haberle dado el alto máximo
+		  var ancho = $(this).width();
+		  //Le doy ancho al caption	 
+		  $('#image-gallery-caption').css('width', ancho + 'px');
+
+		  //Le asigno la clase para que muestre el efecto
+	        $(this).removeClass( );
+	        $(this).addClass( "img-responsive");
+	        $(this).addClass(miEfecto);
+	        
+			posicion = $( window ).width()/2 - ancho/2;
+			if (posicion>0) $('#carrusel-popup').css('left',posicion + 'px');
+			else $('#carrusel-popup').css('left','10px');
+			console.log('posicion' + posicion);
+			console.log('ancho' + ancho);				
+  
+		};
+		img.src = imgData;
+		
+		
     }
 		
 	/*Se asigna un id a cada diapositiva y se asigna a la variable contador el total de items,
@@ -163,6 +190,46 @@ function cargar_galeria(){
     });
 }
 
+// Esta función se ejecuta cuando se entra por primera vez a la app 
+//o bien no hay ninguna imagen en localstorage (porque se han eliminado todas la imágenes) y almacena 2 imágenes de ejemplo
+function resetapp(){
+	var arrayImagenesMuestra=['images/amparomegiascastillo.jpg', 'images/beate.jpg', 'images/chupachup.jpg', 'images/foto1.jpg', 'images/pl.jpg', 'images/pragalomo.jpg'];	
+	var datos;
+			
+	for (var f = 0; f < arrayImagenesMuestra.length; f++){
+		var key = "img_" + f;
+		var id= key;
+		//Almaceno en  un objeto todos los datos del item a grabar
+		datos = {
+			titulo: "imagen muestra" + f,
+			descripcion: "imagen muestra" + f + ". Lorem fistrum pecador hasta luego Lucas tiene musho peligro diodenoo condemor mamaar te va a hasé pupitaa pupita mamaar. ",
+			imagen: arrayImagenesMuestra[f]			
+		};
+		/*
+		* Con el método JSON.stringify() convierto el objeto javascript a una cadena JSON
+		* Y llamo al método setItem() para crear un item
+		*/
+		localStorage.setItem(id, JSON.stringify(datos));
+	}
+}
 
+//Esta función se ejecuta para comprobar si en localStorage hay almacenadas imágenes de la app.
+//La clave de las imágenes de la app emplieza por img_
+function hayImagenes(){
+	//En esta variable almaceno el número de imágenes de la app que hay en localStorage
+	var numeroImagenes=0;
+		
+	for (var f = 0; f < localStorage.length; f++){
+		var clave = localStorage.key(f);
+		//Compruebo que el tem que estoy leyendo es una imagen de la app, si es así aumento en uno el contador de imágenes
+		var n = clave.indexOf("img_");
+		if (n>-1){
+			numeroImagenes++;			
+		}
+	}
+	//Si hay imágenes devuelvo true y si no false
+	if (numeroImagenes > 0) return true;
+	else return false;
+}
 
 

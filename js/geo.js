@@ -6,7 +6,7 @@ $("document").ready(function() {
     
     var miGeo;
     var miControl;
-    
+    //Si el navegador soporta geolocalización ejecuto damePosicion()
     if((miGeo = dameGeoLocalizacion())) {
         damePosicion(miGeo);
     } else {
@@ -14,7 +14,7 @@ $("document").ready(function() {
     }
 	
 });
-
+//Compruebo que el navegador soporta geolocalización
 function dameGeoLocalizacion() {
 	try {
        if( !! navigator.geolocation ) return navigator.geolocation;
@@ -24,7 +24,7 @@ function dameGeoLocalizacion() {
           return undefined;
        }
 }
-
+//Esta función muestra el mapa de google con los datos que se le mandan cada 20mls.
 function mostrarMapa(position) {
      var lat = position.coords.latitude;
      var lon = position.coords.longitude;
@@ -57,7 +57,7 @@ function mostrarMapa(position) {
 	      miMarcador.setMap(miMapa);
      }
 }
-
+//Esta función se ejecuta si falla el envío de información mediante watchPosition
 function errores(error) {
     cancelaPosicion();
     switch(error.code) {
@@ -74,13 +74,15 @@ function errores(error) {
              alert('Geolocalización devolvió un error de código desonocido: ' + error.code);
       }
 }
-
+//Esta función cancela watchPosition
 function cancelaPosicion(){
    if(miControl) miGeo.clearWatch(miControl);
    miControl = null;
 }
-
+//Esta función se ejecuta una vez que se comprueba que el navegador soporta geolocation.
 function damePosicion(geo) {
+	//Obtengo la ubicación del dispositivo, cada vez que el dispositiov cambia(watchPosition)
+    //Cada 200mls. se ejecutará mostrarMapa(), si al cabo de este tiempo no se obtiene información se ejecuta errores()
      miControl = geo.watchPosition(mostrarMapa, errores, {
                 enableHighAccuracy:HIGHACCURACY,
                 maximumAge: MAXIMUM_AGE,
