@@ -33,19 +33,7 @@
   </head>
   <body>
   	<section id="camara" data-role="page" data-theme="c">
-  		<header data-role="header" data-position="fixed">
-		    <h1>App administración imágenes</h1>
-			    <nav data-role="navbar">
-				    <ul>
-				      <li><a href="index.html"  class="ui-btn " data-icon="home" rel="external">Inicio</a></li>
-				      <li><a href="imagenes.html" class="ui-btn" data-icon="bullets" rel="external">Imágenes</a></li>
-				      <li><a href="#" class="ui-btn ui-btn-active ui-state-persist" data-icon="camera">Cámara</a></li>
-				      <li><a href="localizacion.html" class="ui-btn" data-icon="location" rel="external">Localizacion</a></li>
-				    </ul>
-				</nav>
-	    </header><!--header-->
-	    <div data-role="content">
-		    <!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "foto" -->
+  		<!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "foto" -->
 			<div data-role="popup" id="altacamaraModal" class="ui-corner-all" >
 				<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>
 				<div data-role="header" data-theme="b">
@@ -63,13 +51,25 @@
 				</div>			        
 			</div>
 			<!--FIn popup-->
-			<div id="reproductor">
+  		<div data-role="header" data-position="fixed">
+		    <h1>App administración imágenes</h1>
+			    <div data-role="navbar">
+				    <ul>
+				      <li><a href="index.html"  class="ui-btn " data-icon="home" rel="external">Inicio</a></li>
+				      <li><a href="imagenes.html" class="ui-btn" data-icon="bullets" rel="external">Imágenes</a></li>
+				      <li><a href="#" class="ui-btn ui-btn-active ui-state-persist" data-icon="camera">Cámara</a></li>
+				      <li><a href="localizacion.html" class="ui-btn" data-icon="location" rel="external">Localizacion</a></li>
+				    </ul>
+				</div>
+	    </div><!--header-->
+	    <div data-role="content">
+		    <div id="reproductor">
 				<video id='media'></video>
 				<!--Botón que lanza la ventana modal con el formularo de alta y al que se le registra un detector para el evento onclick. Al hacer click se hace la foto-->
 				<button type='button' id="foto" href="#altacamaraModal" data-rel="popup" data-position-to="window" class="ui-btn ui-icon-camera ui-mini  ui-btn-icon-notext"></button>
 			</div>
 		</div><!--content-->
   </section>
-    <script src="js/camara.js"></script>
-  </body>
+  <script src="js/camara.js"></script>
+ </body>
 </html>

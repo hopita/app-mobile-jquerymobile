@@ -34,39 +34,58 @@
   </head>
   <body>
   	<section id="imagenes" data-role="page" data-theme="c">
-  		<header data-role="header" data-position="fixed">
+  		<!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "alta" -->
+		<div data-role="popup" id="altaModal" class="ui-corner-all" >
+			<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>				
+			<div data-role="header" data-theme="b">
+			   <h4>Nueva Imagen</h4>
+			</div>
+			<div class="ui-content">
+				<form name="formulario" enctype="multipart/form-data">
+	       			<label for="titulo" class="ui-hidden-accessible">Título: </label><br>
+					<input type="text" name="titulo" id="titulo" placeholder="Título"><br>
+					<label for="descripcion" class="ui-hidden-accessible">Descripción: </label><br>
+					<textarea type="text" name="descripcion" id="descripcion" placeholder="Descripción"></textarea><br>
+					<label for="archivoimagen" class="ui-hidden-accessible">Imagen*: </label><br>
+					<input type="file" name="archivoimagen" id="archivoimagen"><br>
+					<!-- Elemento donde voy a mostrar un mensaje de aviso si se selecciona un archivo que no sea una imagen-->
+					<div id="alerta"></div>
+					<!--Este botón está inactivo hasta que se seleccione una imagen, que es el único dato obligatorio para dar el alta-->
+					<button id="grabar" class="ui-btn ui-mini"  disabled="disabled">Añadir</button>
+				</form>
+			</div>			        
+		</div><!--altaModal-->
+		<!--Ventana modal con el formulario de modificaciones, esta ventana se abre cuando se hace click en el botón editar en el listado -->
+		<div data-role="popup" id="modificacionModal" data-theme="a" class="ui-corner-all" >
+			<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>				
+			<div data-role="header" data-theme="b">
+			    <h4>Modificación Datos Imagen</h4>
+			 </div>
+			 <div class="ui-content">
+				<form name="formularioeditar" >
+					<input type="hidden" name="idrecord" id="idrecord" value="">
+					<div id="cajaimagen"></div>
+					<label for="tituloeditar" class="ui-hidden-accessible">Título: </label><br>
+					<input type="text" name="tituloeditar" id="tituloeditar" placeholder="Título"><br>
+					<label for="descripcioneditar" class="ui-hidden-accessible">Descripción: </label><br>
+					<textarea type="text" name="descripcioneditar" id="descripcioneditar" placeholder="Descripción"></textarea><br>
+					<input type="button"  id="grabareditar" data-theme="b" value="Modificar">
+				</form>
+			</div>			        
+		</div><!--modificacionModal-->
+  		<div data-role="header" data-position="fixed">
 		    <h1>App administración imágenes</h1>
-			<nav data-role="navbar">
+			<div data-role="navbar">
 				<ul>
 				    <li><a href="index.html" class="ui-btn " data-icon="home" rel="external">Inicio</a></li>
 				    <li><a href="#" class="ui-btn ui-btn-active ui-state-persist" data-icon="bullets">Imágenes</a></li>
 				    <li><a href="camara.html" class="ui-btn" data-icon="camera" rel="external">Cámara</a></li>
 				    <li><a href="localizacion.html" class="ui-btn" data-icon="location" rel="external">Localizacion</a></li>
 				</ul>
-			</nav>
-	    </header><!--header-->
-	    <div data-role="content">
-			<!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "alta" -->
-			<div data-role="popup" id="altaModal" class="ui-corner-all" >
-				<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>				
-				<div data-role="header" data-theme="b">
-			        <h4>Nueva Imagen</h4>
-			    </div>
-			    <div class="ui-content">
-					<form name="formulario" enctype="multipart/form-data">
-	                   	<label for="titulo" class="ui-hidden-accessible">Título: </label><br>
-						<input type="text" name="titulo" id="titulo" placeholder="Título"><br>
-						<label for="descripcion" class="ui-hidden-accessible">Descripción: </label><br>
-						<textarea type="text" name="descripcion" id="descripcion" placeholder="Descripción"></textarea><br>
-						<label for="archivoimagen" class="ui-hidden-accessible">Imagen*: </label><br>
-						<input type="file" name="archivoimagen" id="archivoimagen"><br>
-						<!-- Elemento donde voy a mostrar un mensaje de aviso si se selecciona un archivo que no sea una imagen-->
-						<div id="alerta"></div>
-						<!--Este botón está inactivo hasta que se seleccione una imagen, que es el único dato obligatorio para dar el alta-->
-						<button id="grabar" class="ui-btn ui-mini"  disabled="disabled">Añadir</button>
-					</form>
-			    </div>			        
 			</div>
+	    </div><!--header-->
+	    <div data-role="content">
+			
 			
 			<!--En este elemento muestro el listado de imágenes generado dinámicamente-->
 			<div id ="cajadatosimagenes">	
@@ -76,24 +95,7 @@
 			</div>
 			<div><button class="btn ui-btn" data-theme="b" onclick="eliminarTodos();">Eliminar todo</div>
 			
-			<!--Ventana modal con el formulario de modificaciones, esta ventana se abre cuando se hace click en el botón editar en el listado -->
-			<div data-role="popup" id="modificacionModal" data-theme="a" class="ui-corner-all" >
-				<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>				
-				<div data-role="header" data-theme="b">
-			        <h4>Modificación Datos Imagen</h4>
-			    </div>
-			    <div class="ui-content">
-					<form name="formularioeditar" >
-						<input type="hidden" name="idrecord" id="idrecord" value="">
-						<div id="cajaimagen"></div>
-						<label for="tituloeditar" class="ui-hidden-accessible">Título: </label><br>
-						<input type="text" name="tituloeditar" id="tituloeditar" placeholder="Título"><br>
-						<label for="descripcioneditar" class="ui-hidden-accessible">Descripción: </label><br>
-						<textarea type="text" name="descripcioneditar" id="descripcioneditar" placeholder="Descripción"></textarea><br>
-						<input type="button"  id="grabareditar" data-theme="b" value="Modificar">
-					</form>
-			    </div>			        
-			</div>
+			
 	    </div><!--content-->
   	</section>
 
