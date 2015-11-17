@@ -8,9 +8,7 @@ $("document").ready(function() {
 	
 	console.log($titulocamara);
 		
-	//Al elemento con id media le asigno alto y ancho de la ventana
-	$('#media').width = window.innerWidth;
-	$('#media').height = window.innerHeight;
+	
 		
 	//En la variable miFoto se almacena una referencia al elemento con id foto
 	$miFoto = $('#foto');
