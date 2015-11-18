@@ -133,3 +133,7 @@ video{
 #carrusel-popup{
 	top:10px !important;
 }
+
+#efectos label{
+	font-size:.7em;
+}
