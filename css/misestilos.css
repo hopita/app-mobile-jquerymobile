@@ -117,3 +117,8 @@ video{
 	padding: 10px;
 	text-align:left;
 }
+
+#localizacion, #localizacion .ui-content, #mapa{
+	height: 95%;
+	width:100%;
+}
