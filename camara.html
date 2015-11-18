@@ -34,7 +34,7 @@
   <body>
   	<section id="camara" data-role="page" data-theme="c">
   		<!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "foto" -->
-			<div data-role="popup" id="altacamaraModal" class="ui-corner-all" >
+			<div data-role="popup" id="altacamaraModal" data-transition="pop" data-corners="false" data-overlay-theme="b">
 				<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>
 				<div data-role="header" data-theme="b">
 				    <h4>Alta Imagen</h4>
@@ -46,7 +46,7 @@
 						<input type="text" name="titulocamara" id="titulocamara" placeholder="Título"><br>
 						<label for="descripcioncamara" class="ui-hidden-accessible">Descripción: </label><br>
 						<textarea type="text" name="descripcion" id="descripcioncamara" placeholder="Descripción"></textarea><br>
-						<input type="button" id="grabarcamara" value="Grabar">
+						<button id="grabarcamara" type="button" class="ui-btn ui-mini" data-theme="b">Añadir</button>
 					</form>
 				</div>			        
 			</div>
@@ -55,10 +55,10 @@
 		    <h1>App administración imágenes</h1>
 			    <div data-role="navbar">
 				    <ul>
-				      <li><a href="index.html"  class="ui-btn " data-icon="home" rel="external">Inicio</a></li>
-				      <li><a href="imagenes.html" class="ui-btn" data-icon="bullets" rel="external">Imágenes</a></li>
-				      <li><a href="#" class="ui-btn ui-btn-active ui-state-persist" data-icon="camera">Cámara</a></li>
-				      <li><a href="localizacion.html" class="ui-btn" data-icon="location" rel="external">Localizacion</a></li>
+				      <li><a href="index.html"  class="ui-btn ui-icon-home ui-btn-icon-bottom" rel="external">Inicio</a></li>
+				      <li><a href="imagenes.html" class="ui-btnui-icon-bullets ui-btn-icon-bottom" rel="external">Imágenes</a></li>
+				      <li><a href="#" class="ui-btn ui-btn-activeui-icon-camera ui-btn-icon-bottom">Cámara</a></li>
+				      <li><a href="localizacion.html" class="ui-btnui-icon-location ui-btn-icon-bottom" rel="external">Localizacion</a></li>
 				    </ul>
 				</div>
 	    </div><!--header-->

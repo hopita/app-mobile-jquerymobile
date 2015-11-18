@@ -4,6 +4,7 @@
  * and every code intended for page manipulation will be executed after a page refresh. 
  */
  $( document ).on( "pagecreate", "#inicio", function() {
+ 	console.log("pagecreate inicio");
   var miEfecto;
   
   //Compruebo si hay imágenes almacenadas en localStorage, si no ejecuto resetapp()
@@ -11,8 +12,11 @@
 
 	mostrarInicio();
 });
-
+$(document).on( "updatelayout", function( event ) { 
+     mostrarInicio();
+});
 function mostrarInicio(){
+	console.log("mostrarInicio");
 	
 	//Almaceno la referencia al elemento donde se va mostrar el grid en inicio y lo limpio
 	var $cajadatos = $('#cajadatos');
@@ -57,7 +61,7 @@ function mostrarInicio(){
 
 //Esta función inicializa el plugin masonry, que se ha utilizado para obtener la disposición de la imágenes del listado en pantalla tipo pinterest
 function init_masonry(){
-	
+	console.log("init_masonry");
 	//Almaceno la referencia al elemento con clase content, donde se va a mostrar el listado de imágenes 
 	var $container = $('#cajadatos');
 	
@@ -242,6 +246,7 @@ function hayImagenes(){
 }
 
 $( document ).on( "pagecreate", "#imagenes", function() {
+	console.log("pagecreate imagenes");
 /*Variable para almacenar los datos de la imagen*/
 	var miImagen,
 	/* Variable para almacenar la referencia al elemento type file de formulario*/
@@ -269,7 +274,7 @@ $( document ).on( "pagecreate", "#imagenes", function() {
 });
 
 function mostrarImagenes(){
-
+console.log("mostrarimagenes");
 	//Almaceno la referencia al elemento donde se va mostrar el listado en imagenes y lo limpio
 	var $cajadatosimagenes = $('#cajadatosimagenes ul');
 	$cajadatosimagenes.html("");
@@ -593,7 +598,7 @@ $( document ).on( "pagecreate", "#localizacion", function() {
             center: latlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        //var mapa = document.getElementsByClassName("mapa");
+        
         var map = new google.maps.Map(document.getElementById('mapa'), myOptions);
         // Add an overlay to the map of current lat/lng
         var marker = new google.maps.Marker({
@@ -604,38 +609,6 @@ $( document ).on( "pagecreate", "#localizacion", function() {
     }
 });
 
-function nuevoitemold(event){
-		
-			/*
-			 * El método getTime() me devuelde el número de mm desde 1970/01/01
-			 * Lo voy a utilizar, junto con el string "img_" para generar una clave para el elemento que voy a almacenar
-			 */ 
-			var currentDate = new Date();
-			var time = currentDate.getTime();
-			var key = "img_" + time;
-			var id= key;
-			
-			//Almaceno en  un objeto todos los datos del item a grabar
-			miImg_datos = {
-			    titulo: $(event.data.elementoTitulo).val(),
-			    descripcion: $(event.data.elementoDescripcion).val(),
-			    imagen: miImagen			
-			};
-			
-			/*
-			 * Con el método JSON.stringify() convierto el objeto javascript a una cadena JSON
-			 * Y llamo al método setItem() para crear un item
-			 */
-			localStorage.setItem(id, JSON.stringify(miImg_datos));
-			
-			//Cierro la ventana modal donde se encuentra el formulario
-			$(event.data.elementoModal).popup( "close" );
-
-			//Ejecuto mostrar() para actualizar el listado y que se muestre el nuevo item
-			mostrarImagenes();
-		
-	}
-	
 
 
 

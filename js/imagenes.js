@@ -205,7 +205,7 @@ $("document").ready(function() {
 		$cajadatosimagenes.html("");
 		//cajadatosimagenes.innerHTML = "";
 		//Este botón lanza la ventana modal del formulario de altas
-		$cajadatosimagenes.append('<li data-role="list-divider" role="heading"><a id="alta" href="#altaModal" data-rel="popup" data-position-to="window" class="ui-btn ui-icon-plus ui-mini  ui-btn-icon-notext ui-btn-inline">+</a></li>');
+		$cajadatosimagenes.append('<li data-role="list-divider" role="heading"><a id="alta" href="#altaModal" data-rel="popup" class="ui-btn ui-icon-plus ui-mini  ui-btn-icon-notext ui-btn-inline"></a></li>');
 		 //En esta variable creo el html del listado, no lo hago directamente sobre cajadatosimagenes porque no genera bien el <ul>
 		var texto='';
 		//En este bucle recupero los items y los almaceno en la variable texto

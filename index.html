@@ -12,12 +12,7 @@
   	
     <!-- Los ficheros que jquerymobile necesita para trabajar -->
     <script src="js/jquery-2.1.4.js" type="text/javascript"></script>
-    <script>
-		$( document ).on( "mobileinit", function() {		 
-		  // Establezco el fondo del popup a oscuro
-		  $.mobile.popup.prototype.options.overlayTheme = "b";
-		});
-	</script>
+    
     <script src="js/jquery.mobile.js" type="text/javascript"></script>
     <link rel="stylesheet" href="css/jquery.mobile.css" />
     
@@ -34,7 +29,7 @@
   <body>
   	<section id="inicio" data-role="page" data-theme="c">
   		<!-- popup donde se muestra el carrusel-->
-			 <div data-role="popup" id="carrusel" data-transition="pop" data-corners="false"  >
+			 <div data-role="popup" id="carrusel" data-transition="pop" data-corners="false" data-overlay-theme="b">
 			 	<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>
 		  		<div data-role="header">
 		          <h4 id="image-gallery-title"></h4>
@@ -53,7 +48,7 @@
 		    <h1>App administración imágenes</h1>
 			    <div data-role="navbar">
 				    <ul>
-				      <li><a href="#"  class="ui-btn ui-btn-active ui-state-persist ui-icon-home ui-btn-icon-bottom">Inicio</a></li>
+				      <li><a href="#"  class="ui-btn ui-btn-active ui-icon-home ui-btn-icon-bottom">Inicio</a></li>
 				      <li><a href="imagenes.html" class="ui-btn ui-icon-bullets ui-btn-icon-bottom" rel="external">Imágenes</a></li>
 				      <li><a href="camara.html" class="ui-btn ui-icon-camera ui-btn-icon-bottom" rel="external">Cámara</a></li>
 				      <li><a href="localizacion.html" class="ui-btn ui-icon-location ui-btn-icon-bottom" rel="external">Localizacion</a></li>

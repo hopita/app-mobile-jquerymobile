@@ -73,10 +73,12 @@ button.right {
 #alta{
 	margin-top:0;
 	margin-bottom:0;
+	border: none;
 }
 
 #cajadatosimagenes ul{
 	margin-top:0;
+	border-radius: 0;
 }
 
 .ui-footer,
@@ -121,4 +123,7 @@ video{
 #localizacion, #localizacion .ui-content, #mapa{
 	height: 95%;
 	width:100%;
+}
+.ui-popup-container{
+	top:20px !important;
 }
