@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>App Administración Imágenes</title>
+    
+    <!-- Tema customizado de jquerymobile -->
+    <link rel="stylesheet" href="css/themes/mitema.min.css" />
+  	<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+  	
+    <!-- Los ficheros que jquerymobile necesita para trabajar -->
+    <script src="js/jquery-2.1.4.js" type="text/javascript"></script>
+    <script>
+		$( document ).on( "mobileinit", function() {		 
+		  // We want popups to cover the page behind them with a dark background
+		  $.mobile.popup.prototype.options.overlayTheme = "b";
+		 $.extend( $.mobile , {
+                    defaultPageTransition: 'slide'
+                  });
+		  
+		});
+	</script>
+    <script src="js/jquery.mobile.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/jquery.mobile.css" />
+    
+    <link rel="stylesheet" href="css/misestilos.css" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+     
+    
+  </head>
+  <body>
+  	<div id="inicio" data-role="page" data-theme="c">
+	  	<!-- popup donde se muestra el carrusel-->
+			 <div data-role="popup" id="carrusel" data-transition="pop" data-corners="false"  >
+			 	<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>
+		  		<div data-role="header">
+		          <h4 id="image-gallery-title"></h4>
+		        </div>
+		        <div class="ui-content">
+		          <div id="imagen"></div>
+		          <button type="button" class="ui-btn ui-icon-arrow-l ui-btn-icon-notext left carousel-control" id="imagen-anterior"></button>
+				  <button type="button" class="ui-btn ui-icon-arrow-r ui-btn-icon-notext right carousel-control" id="imagen-siguiente"></button>
+		        </div>
+		        <div data-role="footer">
+					<div id="image-gallery-caption"></div>
+				</div>
+	  		</div>
+	  		<!--fin popup-->
+  		<div data-role="header" data-position="fixed" >
+		    <h1>App administración imágenes</h1>
+			    <div data-role="navbar">
+				    <ul>
+				      <li><a href="#"  class="ui-btn ui-btn-active ui-state-persist ui-icon-home ui-btn-icon-bottom">Inicio</a></li>
+				      <li><a href="#imagenes" class="ui-btn ui-icon-bullets ui-btn-icon-bottom">Imágenes</a></li>
+				      <li><a href="#camara" class="ui-btn ui-icon-camera ui-btn-icon-bottom">Cámara</a></li>
+				      <li><a href="#localizacion" class="ui-btn ui-icon-location ui-btn-icon-bottom">Localizacion</a></li>
+				    </ul>
+				</div>
+	   </div><!--header-->
+	    <div data-role="content"> 
+	     	 <!--En este elemento muestro el listado de imágenes generado dinámicamente-->
+			 <div id ="cajadatos"></div>
+	     </div><!--content-->
+	     <div data-role="footer" data-position="fixed">
+			<form id="efectos">
+		        <fieldset class="ui-grid-c" data-role="controlgroup">
+		            <div class="ui-block-a">
+			            <input type="radio"  name="optradio" id="radio1" onclick="aplicar_efecto(this.value)" value="null">
+						<label for="radio1">Ninguno</label>
+					</div>
+					<div class="ui-block-b">
+						<input type="radio" name="optradio" id="radio2" onclick="aplicar_efecto(this.value)" value="sepia">
+						<label for="radio2">Sepia</label>
+					</div>
+					<div class="ui-block-c">
+						<input type="radio" name="optradio" id="radio3" onclick="aplicar_efecto(this.value)" value="blanconegro">
+						<label for="radio3">Blanco/negro</label>
+					</div>
+					<div class="ui-block-c">
+						<input type="radio" name="optradio" id="radio4" onclick="aplicar_efecto(this.value)" value="img-circle">
+						<label for="radio4">Redondeado</label>
+					</div>
+		        </fieldset>
+	        </form>
+	    </div><!--footer-->
+  	</div><!--inicio-->
+  
+  	<div id="imagenes" data-role="page" data-theme="c">
+	  		<!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "alta" -->
+			<div data-role="popup" id="altaModal" data-theme="a" class="ui-corner-all" >
+				<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>				
+				<div data-role="header" data-theme="b">
+			        <h4>Nueva Imagen</h4>
+			    </div>
+			    <div class="ui-content">
+					<form name="formulario" action="" enctype="multipart/form-data">
+	                   	<label for="titulo" class="ui-hidden-accessible">Título: </label><br>
+						<input type="text" name="titulo" id="titulo" placeholder="Título"><br>
+						<label for="descripcion" class="ui-hidden-accessible">Descripción: </label><br>
+						<textarea type="text" name="descripcion" id="descripcion" placeholder="Descripción"></textarea><br>
+						<label for="archivoimagen" class="ui-hidden-accessible">Imagen*: </label><br>
+						<input type="file" name="archivoimagen" id="archivoimagen"><br>
+						<!-- Elemento donde voy a mostrar un mensaje de aviso si se selecciona un archivo que no sea una imagen-->
+						<div id="alerta"></div>
+						<!--Este botón está inactivo hasta que se seleccione una imagen, que es el único dato obligatorio para dar el alta-->
+						<button id="grabar" class="ui-btn ui-mini"  type="button" disabled="disabled">Añadir</button>
+					</form>
+			    </div>			        
+			</div>
+			<!--Ventana modal con el formulario de modificaciones, esta ventana se abre cuando se hace click en el botón editar en el listado -->
+			<div data-role="popup" id="modificacionModal" data-theme="a" class="ui-corner-all" >
+				<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>				
+				<div data-role="header" data-theme="b">
+			        <h4>Modificación Imagen</h4>
+			    </div>
+			    <div class="ui-content">
+					<form name="formularioeditar" >
+						<input type="hidden" name="idrecord" id="idrecord" value="">
+						<div id="cajaimagen"></div>
+						<label for="tituloeditar" class="ui-hidden-accessible">Título: </label><br>
+						<input type="text" name="tituloeditar" id="tituloeditar" placeholder="Título"><br>
+						<label for="descripcioneditar" class="ui-hidden-accessible">Descripción: </label><br>
+						<textarea type="text" name="descripcioneditar" id="descripcioneditar" placeholder="Descripción"></textarea><br>
+						<input type="button"  id="grabareditar" data-theme="b" value="Modificar">
+					</form>
+			    </div>			        
+			</div> 
+  		<div data-role="header" data-position="fixed" >
+		    <h1>App administración imágenes</h1>
+			    <div data-role="navbar">
+				    <ul>
+				      <li><a href="#inicio"  class="ui-btn  ui-icon-home ui-btn-icon-bottom">Inicio</a></li>
+				      <li><a href="#" class="ui-btn ui-icon-bullets ui-btn-icon-bottom ui-btn-active ui-state-persist">Imágenes</a></li>
+				      <li><a href="#camara" class="ui-btn ui-icon-camera ui-btn-icon-bottom">Cámara</a></li>
+				      <li><a href="#localizacion" class="ui-btn ui-icon-location ui-btn-icon-bottom">Localizacion</a></li>
+				    </ul>
+				</div>
+	   </div><!--header-->
+	   <div data-role="content"> 
+	   		<!--En este elemento muestro el listado de imágenes generado dinámicamente-->
+			<div id ="cajadatosimagenes">	
+				<ul  data-inset="true"></ul>		       
+			</div>
+			<div><button class="btn ui-btn" data-theme="b" onclick="miapp.eliminarTodos();">Eliminar todo</div>
+		</div><!--content-->
+	     
+  	</div><!--imagenes-->  	
+  	
+  	<div id="camara" data-role="page" data-theme="c">
+	  	<!--Ventana modal con el formulario de altas, esta ventana se abre cuando se hace click en el botón con id "foto" -->
+			<div data-role="popup" id="altacamaraModal" class="ui-corner-all" >
+				<a href="#" data-rel="back" class="ui-btn-right ui-btn-b ui-icon-delete ui-btn-icon-notext">Cerrar</a>
+				<div data-role="header" data-theme="b">
+				    <h4>Alta Imagen</h4>
+				</div>
+				<div class="ui-content">
+					<form name="formulariocamara">
+						<div><canvas id="canvas" width="320" height="240"></canvas></div>
+		                <label for="titulocamara" class="ui-hidden-accessible">Título: </label><br>
+						<input type="text" name="titulocamara" id="titulocamara" placeholder="Título"><br>
+						<label for="descripcioncamara" class="ui-hidden-accessible">Descripción: </label><br>
+						<textarea type="text" name="descripcion" id="descripcioncamara" placeholder="Descripción"></textarea><br>
+						<input type="button" id="grabarcamara" value="Grabar">
+					</form>
+				</div>			        
+			</div>
+			<!--FIn popup-->
+  		<div data-role="header" data-position="fixed" >
+		    <h1>App administración imágenes</h1>
+			    <div data-role="navbar">
+				    <ul>
+				      <li><a href="#inicio"  class="ui-btn  ui-icon-home ui-btn-icon-bottom">Inicio</a></li>
+				      <li><a href="#imagenes" class="ui-btn ui-icon-bullets ui-btn-icon-bottom" >Imágenes</a></li>
+				      <li><a href="#" class="ui-btn ui-icon-camera ui-btn-icon-bottom ui-btn-active ui-state-persist">Cámara</a></li>
+				      <li><a href="#localizacion" class="ui-btn ui-icon-location ui-btn-icon-bottom">Localizacion</a></li>
+				    </ul>
+				</div>
+	   </div><!--header-->
+	    <div data-role="content"> 
+			<div id="reproductor">
+				<video id='media'></video>
+				<!--Botón que lanza la ventana modal con el formularo de alta y al que se le registra un detector para el evento onclick. Al hacer click se hace la foto-->
+				<button type='button' id="foto" href="#altacamaraModal" data-rel="popup" data-position-to="window" class="ui-btn ui-icon-camera ui-mini  ui-btn-icon-notext"></button>
+			</div>
+	     </div><!--content-->
+  	</div><!--camara-->
+  	
+  	<div id="localizacion" data-role="page" data-theme="c">
+  		<div data-role="header" data-position="fixed" >
+		    <h1>App administración imágenes</h1>
+			    <div data-role="navbar">
+				    <ul>
+				      <li><a href="#inicio"  class="ui-btn  ui-icon-home ui-btn-icon-bottom">Inicio</a></li>
+				      <li><a href="#imagenes" class="ui-btn ui-icon-bullets ui-btn-icon-bottom" >Imágenes</a></li>
+				      <li><a href="#camara" class="ui-btn ui-icon-camera ui-btn-icon-bottom ui-btn-active ui-state-persist">Cámara</a></li>
+				      <li><a href="#" class="ui-btn ui-icon-location ui-btn-icon-bottom ui-btn-active ui-state-persist">Localizacion</a></li>
+				    </ul>
+				</div>
+	   </div><!--header-->
+	    <div data-role="content"> 
+	     	 <!--En este elemento muestro el mapa de google con nuestra localización-->
+    		<div id="mapa"></div>
+	     </div><!--content-->
+  	</div><!--localizacion-->
+  	
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
+    <!--plugin para detectar si se han cargado las imágenes-->
+    <script src="js/imagesloader.js"></script>
+    <!--plugin para mostrar el listado de imágenes con un efecto pinterest-->
+    <script src="js/masonry.js"></script>
+    <script src="js/myscriptmultipage.js"></script>
+  </body>
+</html>
