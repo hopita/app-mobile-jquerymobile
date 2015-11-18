@@ -118,12 +118,18 @@ video{
 	font-weight:normal;
 	padding: 10px;
 	text-align:left;
+	font-size:.8em;
 }
 
 #localizacion, #localizacion .ui-content, #mapa{
 	height: 95%;
 	width:100%;
 }
-.ui-popup-container{
-	top:20px !important;
+
+.ui-header .ui-title~.ui-navbar .ui-btn{
+	border-width:0;
+}
+
+#carrusel-popup{
+	top:10px !important;
 }

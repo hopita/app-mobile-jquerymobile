@@ -1,8 +1,6 @@
 $("document").ready(function() {
 	//Variable para almacenar el efecto seleccionado.
 	var miEfecto;
-	//Para prevenir que la imagen sea más alta que la pantalla
-	
     
 	//Compruebo si hay imágenes almacenadas en localStorage, si no ejecuto resetapp()
 	if (!hayImagenes()) resetapp();
@@ -149,7 +147,7 @@ function cargar_galeria(){
 		img.onload = function(){
 		  //Añado al DOM el elemento img que acabo de crear
 		  $('#imagen').html(img);
-		  //Le asigno la altura máxima
+		  //Le asigno la altura máxima a la imagen
 		  $(this).css( "max-height", maxHeight );
 		  //Recupero el ancho de la imagen despues de haberle dado el alto máximo
 		  var ancho = $(this).width();
@@ -193,7 +191,7 @@ function cargar_galeria(){
 // Esta función se ejecuta cuando se entra por primera vez a la app 
 //o bien no hay ninguna imagen en localstorage (porque se han eliminado todas la imágenes) y almacena 2 imágenes de ejemplo
 function resetapp(){
-	var arrayImagenesMuestra=['images/amparomegiascastillo.jpg', 'images/beate.jpg', 'images/chupachup.jpg', 'images/foto1.jpg', 'images/pl.jpg', 'images/pragalomo.jpg'];	
+	var arrayImagenesMuestra=['images/foto4.jpg', 'images/beate.jpg', 'images/chupachup.jpg', 'images/foto1.jpg', 'images/pragalomo.jpg', 'images/foto3.jpg', 'images/foto22.jpg', 'images/pl.jpg'];	
 	var datos;
 			
 	for (var f = 0; f < arrayImagenesMuestra.length; f++){
